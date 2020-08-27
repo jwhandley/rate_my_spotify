@@ -38,6 +38,7 @@ class SpotifyUser():
         
         return albums.reset_index(drop=True)
 
+# The following functions don't require user authentication, so I created a new instance of spotipy that uses the correct authentication stream
 sp_client = spotipy.Spotify(auth_manager = SpotifyClientCredentials())
 
 def top_50_tracks():
