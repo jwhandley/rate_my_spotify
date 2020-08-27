@@ -6,13 +6,6 @@ import pandas as pd
 import numpy as np
 import os
 
-# For the script to work you need to set the environment variables for your client id, client secret and redirect uri:
-# export CLIENT_ID='your_client_id'
-# export CLIENT_SECRET='your_client_secret'
-# export REDIRECT_URI='your_redirect_uri'
-# 
-# The redirect uri needs to be explicitly allowed in your spotify app. It can be any url, preferably the url to your web app
-
 class SpotifyUser():
     def __init__(self,username):
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope='user-top-read user-library-read',username=username))
@@ -82,8 +75,6 @@ def get_features(ids):
 def main():
     user = SpotifyUser(input('Please input Spotify username: '))
     albums = user.top_albums
-    # albums = pd.concat([albums_from_tracks(ids),
-    #                     user_saved_albums()],axis=0).drop_duplicates(subset=['Name'])
 
 
     albums = pd.concat([albums,get_features(albums['Spotify ID'])],axis=1)
