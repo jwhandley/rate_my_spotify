@@ -65,12 +65,11 @@ def get_score(name,artist):
         return np.nan
 
 def main():
-    # In the future, this might be replaced by instantiating a class with the username as a parameter
-    spotify_top_albums.set_user(input('Please input Spotify username: '))
+    user = spotify_top_albums.SpotifyUser(input('Please input Spotify username: '))
 
-    ids = spotify_top_albums.user_top_tracks()
-    albums = pd.concat([spotify_top_albums.albums_from_tracks(ids),
-                        spotify_top_albums.user_saved_albums(limit=50)],axis=0).drop_duplicates(subset=['Name']).reset_index(drop=True)
+    
+    albums = pd.concat([user.top_albums,
+                        user.get_saved_albums(limit=50)],axis=0).drop_duplicates(subset=['Name']).reset_index(drop=True)
 
 
     names = [parse_album(albums.loc[i,'Name']) for i in range(len(albums))]

@@ -1,5 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from spotipy import SpotifyClientCredentials
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
@@ -12,48 +13,44 @@ import os
 # 
 # The redirect uri needs to be explicitly allowed in your spotify app. It can be any url, preferably the url to your web app
 
-scope = 'user-top-read'
-username = None
+class SpotifyUser():
+    def __init__(self,username):
+        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope='user-top-read user-library-read',username=username))
 
-def set_user(user):
-    username = user
+        self.top_tracks = self.get_top_tracks()
+        self.saved_albums = self.get_saved_albums()
+        self.top_albums = albums_from_tracks(self.top_tracks)
 
-    return username
+    def get_top_tracks(self):
+        # Gets the current user's top tracks
+        # and returns their id's in a list
+        user_top_tracks = self.sp.current_user_top_tracks(limit=50)
+        user_top_track_ids = [user_top_tracks['items'][i]['id'] for i in range(50)]
 
-# This creates a spotipy instance to use for the rest of the script
-try:
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,username=username))
-except:
-    print('Please set a user (run function set_user("you_usernamae"))')
+        return user_top_track_ids
 
-def user_top_tracks():
-    # Gets the current user's top tracks
-    # and returns their id's in a list
-    user_top_tracks = sp.current_user_top_tracks(limit=50)
-    user_top_track_ids = [user_top_tracks['items'][i]['id'] for i in range(50)]
+    def get_saved_albums(self,limit=20):
+        # Gets the current user's saved albums
+        # and returns a dataframe with their name, artist, a link to their album cover, popularity out of 100, and id
+        saved_albums = self.sp.current_user_saved_albums(limit=limit)
+        
+        albums = [(saved_albums['items'][i]['album']['name'],
+                   saved_albums['items'][i]['album']['artists'][0]['name'],
+                   saved_albums['items'][i]['album']['images'][0]['url'],
+                   saved_albums['items'][i]['album']['popularity'],
+                   saved_albums['items'][i]['album']['id']) for i in range(limit) if (saved_albums['items'][i]['album']['total_tracks'] > 5) and (saved_albums['items'][i]['album']['popularity']>20) and (saved_albums['items'][i]['album']['type'] == 'album')]
 
-    return user_top_track_ids
+        albums = pd.DataFrame(albums,columns=['Name','Artist','Album Art URL','Popularity','Spotify ID'])
 
-def user_saved_albums(limit=20):
-    # Gets the current user's saved albums
-    # and returns a dataframe with their name, artist, a link to their album cover, popularity out of 100, and id
-    saved_albums = sp.current_user_saved_albums(limit=limit)
-    
-    albums = [(saved_albums['items'][i]['album']['name'],
-               saved_albums['items'][i]['album']['artists'][0]['name'],
-               saved_albums['items'][i]['album']['images'][0]['url'],
-               saved_albums['items'][i]['album']['popularity'],
-               saved_albums['items'][i]['album']['id']) for i in range(limit) if (saved_albums['items'][i]['album']['total_tracks'] > 5) and (saved_albums['items'][i]['album']['popularity']>20) and (saved_albums['items'][i]['album']['type'] == 'album')]
+        
+        return albums.reset_index(drop=True)
 
-    albums = pd.DataFrame(albums,columns=['Name','Artist','Album Art URL','Popularity','Spotify ID'])
-
-    
-    return albums.reset_index(drop=True)
+sp_client = spotipy.Spotify(auth_manager = SpotifyClientCredentials())
 
 def top_50_tracks():
     # Not used in the main program
     # Gets the tracks from the US Top 50 playlist and returns their id's in a list
-    top_50 = sp.playlist(playlist_id='37i9dQZEVXbLRQDuF5jeBp')
+    top_50 = sp_client.playlist(playlist_id='37i9dQZEVXbLRQDuF5jeBp')
     top_50_track_ids = [top_50['tracks']['items'][i]['track']['id'] for i in range(50)]
 
     return top_50_track_ids
@@ -62,7 +59,7 @@ def albums_from_tracks(ids):
     # Gets the albums from track id's
     # Drops duplicates in case multiple tracks are from the same album
     # Returns the name, artist, link to cover are, popularity and track id for the first track from the album
-    tracks = sp.tracks(ids)['tracks']
+    tracks = sp_client.tracks(ids)['tracks']
 
     albums = [(tracks[i]['album']['name'],
                tracks[i]['artists'][0]['name'],
@@ -74,18 +71,17 @@ def albums_from_tracks(ids):
     albums = albums.drop_duplicates(subset=['Name'])
     
     return albums.reset_index(drop=True)
-    
+
 def get_features(ids):
     # Gets audio features for given tracks
-    features = sp.audio_features(tracks=ids)
+    features = sp_client.audio_features(tracks=ids)
     keys = ['danceability','energy','loudness','speechiness','acousticness','instrumentalness','liveness','valence','tempo']
 
     return pd.DataFrame().from_dict({key: [features[i][key] for i in range(len(ids))] for key in keys}).reset_index(drop=True)
 
 def main():
-    set_user(input('Please input your Spotify username: '))
-    ids = user_top_tracks()
-    albums = albums_from_tracks(ids)
+    user = SpotifyUser(input('Please input Spotify username: '))
+    albums = user.top_albums
     # albums = pd.concat([albums_from_tracks(ids),
     #                     user_saved_albums()],axis=0).drop_duplicates(subset=['Name'])
 
