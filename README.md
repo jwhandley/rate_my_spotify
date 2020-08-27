@@ -6,7 +6,7 @@ This will eventually be a web app that takes recent Spotify listening history an
 
 ### Prerequisites
 
-This uses the spotipy module to interact with the [Spotify API](https://github.com/plamere/spotipy).
+This uses the [spotipy module](https://github.com/plamere/spotipy) to interact with the [Spotify Web API](https://developer.spotify.com/documentation/web-api/).
 
 You'll also need `pandas`, `tqdm`, `numpy`, `requests`, `re`, and `bs4`.
 
