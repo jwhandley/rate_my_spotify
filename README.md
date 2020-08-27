@@ -6,10 +6,7 @@ This will eventually be a web app that takes recent Spotify listening history an
 
 ### Prerequisites
 
-This uses the spotipy module to interact with the Spotify API. Install with
-```
-pip install spotipy
-```
+This uses the spotipy module to interact with the [Spotify API](https://github.com/plamere/spotipy).
 
 You'll also need `pandas`, `tqdm`, `numpy`, `requests`, `re`, and `bs4`.
 
@@ -19,16 +16,16 @@ In order to run the scripts you will need to log in to your [Spotify for Develop
 
 On Linux or macOS:
 ```
-export CLIENT_ID='your_client_id'
-export CLIENT_SECRET='your_client_secret'
-export REDIRECT_URI='your_redirect_uri'
+export SPOTIPY_CLIENT_ID='your_client_id'
+export SPOTIPY_CLIENT_SECRET='your_client_secret'
+export SPOTIPY_REDIRECT_URI='your_redirect_uri'
 ```
 
 and on Windows:
 ```
-set CLIENT_ID='your_client_id'
-set CLIENT_SECRET='your_client_secret'
-set REDIRECT_URI='your_redirect_uri'
+set SPOTIPY_CLIENT_ID='your_client_id'
+set SPOTIPY_CLIENT_SECRET='your_client_secret'
+set SPOTIPY_REDIRECT_URI='your_redirect_uri'
 ```
 
 ### Running
