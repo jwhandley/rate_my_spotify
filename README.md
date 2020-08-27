@@ -34,3 +34,7 @@ set REDIRECT_URI='your_redirect_uri'
 ### Running
 
 Right now running `spotify_top_albums.py` will write a csv of your top albums (derived from your top tracks) along with their primary artist, the audio features of your top track from the album and a link to the album cover art to `output`. Running `album_scores.py` will write a csv of your top albums (derived from your top tracks and last 50 saved albums), their primary artist, a link to their album cover art, and their Metacritic score (if one was found). I have examples from my account in the output folder.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
