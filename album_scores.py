@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 import re
 from tqdm import tqdm
-import os
 import spotify_top_albums
 
 url = 'https://en.wikipedia.org/wiki/'
@@ -65,6 +64,7 @@ def get_score(name,artist):
         return np.nan
 
 def main():
+    import os
     user = spotify_top_albums.SpotifyUser(input('Please input Spotify username: '))
 
     
