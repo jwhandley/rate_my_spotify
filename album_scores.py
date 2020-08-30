@@ -36,7 +36,7 @@ def get_score(name,artist):
     # This function tries each of these formats and then looks for a table with the header "Aggregate scores" and finds the row for Metacritic scores, returns the score
     try:
         try:
-            r = s.get(url + name)
+            r = s.get(''.join([url,name]))
 
             soup = BeautifulSoup(r.content,'html.parser')
 
@@ -45,7 +45,7 @@ def get_score(name,artist):
             pass
 
         try:
-            r = s.get(url + name + f'_({artist}_album)')
+            r = s.get(''.join([url,name,f'_({artist}_album)']))
 
             soup = BeautifulSoup(r.content,'html.parser')
 
@@ -54,7 +54,7 @@ def get_score(name,artist):
             pass
 
         try:
-            r = s.get(url + name + '_(album)')
+            r = s.get(''.join([url,name,'_(album)']))
 
             soup = BeautifulSoup(r.content,'html.parser')
 
@@ -75,11 +75,9 @@ def main():
     names = [parse_album(albums.loc[i,'Name']) for i in range(len(albums))]
     artists = [parse_artist(albums.loc[i,'Artist']) for i in range(len(albums))]
 
-    scores = []
     print('Downloading Metacritic scores from Wikipedia.')
-    for i in tqdm(range(len(names))):
-        scores.append(get_score(names[i],artists[i]))
-
+    scores = [get_score(names[i],artists[i]) for i in tqdm(range(len(names)))]
+    
 
     albums['Score'] = scores
     albums = albums.dropna(subset=['Score'])
