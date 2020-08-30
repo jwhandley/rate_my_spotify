@@ -1,14 +1,11 @@
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-from spotipy import SpotifyClientCredentials
+from spotipy import SpotifyClientCredentials, oauth2, Spotify
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
-import os
 
 class SpotifyUser():
     def __init__(self,username):
-        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope='user-top-read user-library-read',username=username))
+        self.sp = Spotify(auth_manager=oauth2.SpotifyOAuth(scope='user-top-read user-library-read',username=username))
 
         self.top_tracks = self.get_top_tracks()
         self.saved_albums = self.get_saved_albums()
@@ -39,7 +36,7 @@ class SpotifyUser():
         return albums.reset_index(drop=True)
 
 # The following functions don't require user authentication, so I created a new instance of spotipy that uses the correct authentication stream
-sp_client = spotipy.Spotify(auth_manager = SpotifyClientCredentials())
+sp_client = Spotify(auth_manager = SpotifyClientCredentials())
 
 def top_50_tracks():
     # Not used in the main program
@@ -74,6 +71,7 @@ def get_features(ids):
     return pd.DataFrame().from_dict({key: [features[i][key] for i in range(len(ids))] for key in keys}).reset_index(drop=True)
 
 def main():
+    import os
     user = SpotifyUser(input('Please input Spotify username: '))
     albums = user.top_albums
 
