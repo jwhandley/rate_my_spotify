@@ -1,5 +1,6 @@
 from spotipy import SpotifyClientCredentials, oauth2, Spotify
 from tqdm import tqdm
+# I'd like to get rid of the pandas dependency and just deal with dictionaries, but there are a couple points where I haven't figured out how yet
 import pandas as pd
 import numpy as np
 
@@ -22,17 +23,17 @@ class SpotifyUser():
     def get_saved_albums(self,limit=20):
         # Gets the current user's saved albums
         # and returns a dataframe with their name, artist, a link to their album cover, popularity out of 100, and id
-        saved_albums = self.sp.current_user_saved_albums(limit=limit)
+        saved_albums = self.sp.current_user_saved_albums(limit=limit)['items']
         
-        albums = [(saved_albums['items'][i]['album']['name'],
-                   saved_albums['items'][i]['album']['artists'][0]['name'],
-                   saved_albums['items'][i]['album']['images'][0]['url'],
-                   saved_albums['items'][i]['album']['popularity'],
-                   saved_albums['items'][i]['album']['id']) for i in range(limit) if (saved_albums['items'][i]['album']['total_tracks'] > 5) and (saved_albums['items'][i]['album']['popularity']>20) and (saved_albums['items'][i]['album']['type'] == 'album')]
+        albums = [(saved_albums[i]['album']['name'],
+                   saved_albums[i]['album']['artists'][0]['name'],
+                   saved_albums[i]['album']['images'][0]['url'],
+                   saved_albums[i]['album']['popularity'],
+                   saved_albums[i]['album']['id']) for i in range(limit) if (saved_albums[i]['album']['total_tracks'] > 5) and (saved_albums[i]['album']['popularity']>20) and (saved_albums[i]['album']['type'] == 'album')]
 
         albums = pd.DataFrame(albums,columns=['Name','Artist','Album Art URL','Popularity','Spotify ID'])
 
-        
+
         return albums.reset_index(drop=True)
 
 # The following functions don't require user authentication, so I created a new instance of spotipy that uses the correct authentication stream

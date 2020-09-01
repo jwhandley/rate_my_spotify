@@ -1,9 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
-import numpy as np
 import re
-from tqdm import tqdm
+import numpy as np
 import spotify_top_albums
 
 url = 'https://en.wikipedia.org/wiki/'
@@ -34,11 +32,20 @@ def get_score(name,artist):
     #   - Album_Name_(album) -- if the album name also points to another page
     # This function tries each of these formats and then looks for a table with the header "Aggregate scores" and finds the row for Metacritic scores, returns the score
     try:
+        # I don't really like this structure -- there's too much repeated code -- but I couldn't figure out how to tell beforehand which format the album's Wikipedia page is in.
         try:
             r = s.get(''.join([url,name]))
 
             soup = BeautifulSoup(r.content,'html.parser')
 
+            # This is quite complicated, but it basically follows the structure of the Wikipedia page: 
+            # Fist, search for a table head 'Aggregate scores'
+            # Then find its parent (the first row in the table)
+            # Then *its* parent (the table itself)
+            # Then find a link titled 'Metacritic'
+            # Then find its parent (the name column of the row in the table with the Metacritic score)
+            # Then find the sibling -- the next column in the row and take the first two digits characters from that (the Metascore)
+            # Finally, convert this to an integer and return it
             return int(soup.find('th',text='Aggregate scores').find_parent().find_parent().find('a',title='Metacritic').find_parent().find_next_sibling().text[:2])
         except:
             pass
@@ -64,6 +71,8 @@ def get_score(name,artist):
         return np.nan
 
 def main():
+    import pandas as pd
+    from tqdm import tqdm
     import os
     user = spotify_top_albums.SpotifyUser(input('Please input Spotify username: '))
 

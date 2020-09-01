@@ -1,16 +1,15 @@
 ,Name,Artist,Album Art URL,Popularity,Spotify ID,danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,tempo
 0,My Everything (Deluxe),Ariana Grande,https://i.scdn.co/image/ab67616d0000b273deec12a28d1e336c5052e9aa,80,7xoUc6faLbCqZO6fQEYprd,0.628,0.593,-5.036,0.0323,0.093,1.65e-06,0.096,0.104,125.026
-1,CollXtion II,Allie X,https://i.scdn.co/image/ab67616d0000b273a640c016a842d876ca37b9ad,58,2QffgsYVZkvMQsZmQdgf2L,0.569,0.685,-6.086,0.0812,0.104,0.0014,0.0674,0.372,189.938
-2,Dangerous Woman,Ariana Grande,https://i.scdn.co/image/ab67616d0000b2735f9393fda71e7df39b34defd,70,4TZdeM7zelZGz6JPrXSEZ1,0.633,0.412,-7.339,0.0284,0.42,3.57e-06,0.048,0.214,102.215
-3,Future Nostalgia,Dua Lipa,https://i.scdn.co/image/ab67616d0000b273cda2c6ad6272aea9c5811a49,74,6zrJLhslleCHby0wbUnvVy,0.875,0.813,-4.502,0.0579,0.00618,0.0,0.321,0.859,114.993
+1,Dangerous Woman,Ariana Grande,https://i.scdn.co/image/ab67616d0000b2735f9393fda71e7df39b34defd,70,4TZdeM7zelZGz6JPrXSEZ1,0.633,0.412,-7.339,0.0284,0.42,3.57e-06,0.048,0.214,102.215
+2,Future Nostalgia,Dua Lipa,https://i.scdn.co/image/ab67616d0000b273cda2c6ad6272aea9c5811a49,74,6zrJLhslleCHby0wbUnvVy,0.875,0.813,-4.502,0.0579,0.00618,0.0,0.321,0.859,114.993
+3,CollXtion II,Allie X,https://i.scdn.co/image/ab67616d0000b273a640c016a842d876ca37b9ad,58,2QffgsYVZkvMQsZmQdgf2L,0.569,0.685,-6.086,0.0812,0.104,0.0014,0.0674,0.372,189.938
 4,Super Sunset,Allie X,https://i.scdn.co/image/ab67616d0000b273bacd4a35933c3a26ea89b048,47,64Qag843DEJ8kq9OK352vh,0.474,0.497,-7.386,0.0263,0.156,0.000164,0.263,0.337,145.977
 5,Pop 2,Charli XCX,https://i.scdn.co/image/ab67616d0000b273c61a793955ac590e672eafe8,48,1qZuf7zgRHKgfSijGm2CTy,0.742,0.656,-6.409,0.0744,0.0984,0.0,0.114,0.874,129.946
-6,Cape God,Allie X,https://i.scdn.co/image/ab67616d0000b27315e9d0b5437f77aad88af2fd,54,4GSqiK9YdVNhilXMFtCiQB,0.51,0.536,-5.988,0.0399,0.0217,7.27e-06,0.0869,0.383,90.763
-7,Electra Heart (Deluxe),MARINA,https://i.scdn.co/image/ab67616d0000b273203e4c6a048df02a21cdd813,67,4sOX1nhpKwFWPvoMMExi3q,0.66,0.689,-2.671,0.0337,0.0884,0.0,0.0922,0.427,127.98
+6,Electra Heart (Deluxe),MARINA,https://i.scdn.co/image/ab67616d0000b273203e4c6a048df02a21cdd813,67,4sOX1nhpKwFWPvoMMExi3q,0.66,0.689,-2.671,0.0337,0.0884,0.0,0.0922,0.427,127.98
+7,Sweetener,Ariana Grande,https://i.scdn.co/image/ab67616d0000b273c3af0c2355c24ed7023cd394,83,2qT1uLXPVPzGgFOx4jtEuo,0.699,0.713,-5.507,0.0594,0.04,3.11e-06,0.294,0.354,121.993
 8,Super Sunset (Analog),Allie X,https://i.scdn.co/image/ab67616d0000b27358eb08a18ab9d6ed6c4d2d3f,33,2PRvxvsmStnikp1GFWjlYq,0.422,0.892,-3.261,0.0667,0.186,0.000135,0.134,0.299,141.704
-9,Love Is Dead,CHVRCHES,https://i.scdn.co/image/ab67616d0000b2730b9e33e107816121c00a644c,42,2zpdPPsPJYGQ9VYRVJXfv9,0.472,0.828,-3.477,0.0353,0.0102,0.00299,0.226,0.388,86.976
-10,Collxtion I,Allie X,https://i.scdn.co/image/ab67616d0000b2739f8106e65de780d01077bc68,65,1CVQ8euBNROz7KDPeNqwWE,0.606,0.642,-5.339,0.0279,0.00575,0.48,0.102,0.0763,84.975
-11,Sweetener,Ariana Grande,https://i.scdn.co/image/ab67616d0000b273c3af0c2355c24ed7023cd394,83,2qT1uLXPVPzGgFOx4jtEuo,0.699,0.713,-5.507,0.0594,0.04,3.11e-06,0.294,0.354,121.993
-12,Charli,Charli XCX,https://i.scdn.co/image/ab67616d0000b273cee4acc7bfe23bc75461a66c,64,3WGJSY8JaGliVIJyMig5aS,0.745,0.728,-4.686,0.034,0.0183,1.5e-06,0.14,0.625,124.016
-13,MASSEDUCTION,St. Vincent,https://i.scdn.co/image/ab67616d0000b273c5819ccc3fbcd68e3fe0ebd2,58,2qTy3hGSbxoSenKmlKGHFw,0.527,0.716,-6.029,0.0616,0.0698,8.71e-05,0.0737,0.331,99.426
-14,Chou Ikimonobakari Tennen Kinen Members Best Selection,Ikimonogakari,https://i.scdn.co/image/ab67616d0000b2734ff62a8bad528d3b04d0794e,56,1lTfD2M6UpJRWi3YLb8qb5,0.462,0.514,-5.031,0.03,0.14,0.0,0.37,0.416,149.564
+9,Cape God,Allie X,https://i.scdn.co/image/ab67616d0000b27315e9d0b5437f77aad88af2fd,54,4GSqiK9YdVNhilXMFtCiQB,0.51,0.536,-5.988,0.0399,0.0217,7.27e-06,0.0869,0.383,90.763
+10,Charli,Charli XCX,https://i.scdn.co/image/ab67616d0000b273cee4acc7bfe23bc75461a66c,64,3WGJSY8JaGliVIJyMig5aS,0.745,0.728,-4.686,0.034,0.0183,1.5e-06,0.14,0.625,124.016
+11,Love Is Dead,CHVRCHES,https://i.scdn.co/image/ab67616d0000b2730b9e33e107816121c00a644c,43,2zpdPPsPJYGQ9VYRVJXfv9,0.472,0.828,-3.477,0.0353,0.0102,0.00299,0.226,0.388,86.976
+12,Collxtion I,Allie X,https://i.scdn.co/image/ab67616d0000b2739f8106e65de780d01077bc68,65,1CVQ8euBNROz7KDPeNqwWE,0.606,0.642,-5.339,0.0279,0.00575,0.48,0.102,0.0763,84.975
+13,True Romance,Charli XCX,https://i.scdn.co/image/ab67616d0000b2734c635adea07bfe59a0235866,35,6t8gutWdQVmAfYM2kK2MFL,0.521,0.94,-3.702,0.0969,0.0414,0.00133,0.279,0.236,115.039
