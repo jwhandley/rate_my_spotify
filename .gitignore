@@ -3,3 +3,4 @@ __pycache__/
 spotify_api_credentials
 .cache-jwhandley
 setup.py
+.vscode
