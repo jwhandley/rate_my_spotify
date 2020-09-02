@@ -1,8 +1,4 @@
 from spotipy import SpotifyClientCredentials, oauth2, Spotify
-from tqdm import tqdm
-# I'd like to get rid of the pandas dependency and just deal with dictionaries, but there are a couple points where I haven't figured out how yet
-import pandas as pd
-import numpy as np
 
 class SpotifyUser():
     def __init__(self,username):
@@ -22,19 +18,27 @@ class SpotifyUser():
 
     def get_saved_albums(self,limit=20):
         # Gets the current user's saved albums
-        # and returns a dataframe with their name, artist, a link to their album cover, popularity out of 100, and id
+        # and returns a dictionary with their name, artist, a link to their album cover, popularity out of 100, and id
         saved_albums = self.sp.current_user_saved_albums(limit=limit)['items']
         
-        albums = [(saved_albums[i]['album']['name'],
-                   saved_albums[i]['album']['artists'][0]['name'],
-                   saved_albums[i]['album']['images'][0]['url'],
-                   saved_albums[i]['album']['popularity'],
-                   saved_albums[i]['album']['id']) for i in range(limit) if (saved_albums[i]['album']['total_tracks'] > 5) and (saved_albums[i]['album']['popularity']>20) and (saved_albums[i]['album']['type'] == 'album')]
+        albums = {
+            'name': [],
+            'artist': [],
+            'cover': [],
+            'popularity': [],
+            'id': []
+        }
 
-        albums = pd.DataFrame(albums,columns=['Name','Artist','Album Art URL','Popularity','Spotify ID'])
+        for i in range(limit):
+            if (saved_albums[i]['album']['total_tracks'] > 5) and (saved_albums[i]['album']['popularity']>20) and (saved_albums[i]['album']['type'] == 'album'):
+                albums['name'].append(saved_albums[i]['album']['name'])
+                albums['artist'].append(saved_albums[i]['album']['artists'][0]['name'])
+                albums['cover'].append(saved_albums[i]['album']['images'][0]['url'])
+                albums['popularity'].append(saved_albums[i]['album']['popularity'])
+                albums['id'].append(saved_albums[i]['album']['id'])
 
 
-        return albums.reset_index(drop=True)
+        return albums
 
 # The following functions don't require user authentication, so I created a new instance of spotipy that uses the correct authentication stream
 sp_client = Spotify(auth_manager = SpotifyClientCredentials())
@@ -53,37 +57,46 @@ def albums_from_tracks(ids):
     # Returns the name, artist, link to cover are, popularity and track id for the first track from the album
     tracks = sp_client.tracks(ids)['tracks']
 
-    albums = [(tracks[i]['album']['name'],
-               tracks[i]['artists'][0]['name'],
-               tracks[i]['album']['images'][0]['url'],
-               tracks[i]['popularity'],
-               ids[i]) for i in range(len(ids)) if (tracks[i]['album']['total_tracks']>5) and (tracks[i]['popularity']>20)]
-
-    albums = pd.DataFrame(albums,columns=['Name','Artist','Album Art URL','Popularity','Spotify ID'])
-    albums = albums.drop_duplicates(subset=['Name'])
+    albums = {
+        'name': [],
+        'artist': [],
+        'cover': [],
+        'popularity': [],
+        'id': []
+    }
+    names = []
+    for i in range(len(tracks)):
+        name = tracks[i]['album']['name']
+        if (name not in names) and (tracks[i]['album']['total_tracks']>5) and (tracks[i]['popularity']>20):
+            albums['name'].append(name)
+            albums['artist'].append(tracks[i]['artists'][0]['name'])
+            albums['cover'].append(tracks[i]['album']['images'][0]['url'])
+            albums['popularity'].append(tracks[i]['popularity'])
+            albums['id'].append(ids[i])
+        names.append(name)
     
-    return albums.reset_index(drop=True)
+    return albums
 
 def get_features(ids):
     # Gets audio features for given tracks
     features = sp_client.audio_features(tracks=ids)
     keys = ['danceability','energy','loudness','speechiness','acousticness','instrumentalness','liveness','valence','tempo']
 
-    return pd.DataFrame().from_dict({key: [features[i][key] for i in range(len(ids))] for key in keys}).reset_index(drop=True)
+    return {key: [features[i][key] for i in range(len(ids))] for key in keys}
 
 def main():
     import os
+    import pandas as pd
     user = SpotifyUser(input('Please input Spotify username: '))
     albums = user.top_albums
 
+    albums = pd.DataFrame().from_dict({**albums,**get_features(albums['id'])}).set_index('name')
 
-    albums = pd.concat([albums,get_features(albums['Spotify ID'])],axis=1)
 
     if not os.path.exists('output'):
         os.mkdir('output')
 
     albums.to_csv('output/album_data.csv')
-    print(albums.head())
 
 if __name__ == '__main__':
     main()
