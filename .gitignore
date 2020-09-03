@@ -4,3 +4,4 @@ spotify_api_credentials
 .cache-jwhandley
 setup.sh
 .vscode
+*.ipynb
